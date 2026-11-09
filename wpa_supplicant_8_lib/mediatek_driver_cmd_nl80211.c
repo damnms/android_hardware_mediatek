@@ -429,7 +429,7 @@ static int mediatek_testmode_send(void* priv, const u8* data, size_t data_len) {
     NLA_PUT(msg, NL80211_ATTR_TESTDATA, data_len, data);
 
     params = (struct wpa_driver_testmode_params*)data;
-    index = params->hdr.index & BITS(0, 23);
+    index = params->hdr.index & 0x00FFFFFF; /* BITS(0, 23) */
 
     switch (index) {
         case NL80211_TESTMODE_STATISTICS: {
