@@ -7,6 +7,14 @@ cc_library_static {
     name: "lib_driver_cmd_mt66xx",
     vendor: true,
     owner: "mtk",
+    // Build with the same CONFIG_* flags as wpa_supplicant itself. Without
+    // them struct wpa_driver_nl80211_data has a different layout here than
+    // in the supplicant (e.g. CONFIG_NAN changes struct wpa_driver_capa), and
+    // fields like drv->first_bss are read from the wrong offset.
+    defaults: [
+        "wpa_supplicant_cflags_default",
+        "wpa_supplicant_usd_defaults",
+    ],
     sanitize: {
         cfi: true,
     },
