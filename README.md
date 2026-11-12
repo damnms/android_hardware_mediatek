@@ -19,3 +19,9 @@ This fork is based on
   headers define `struct sched_param` a second time next to Bionic.
   `RtcDriver.cpp` only needs `linux/ioctl.h` and `linux/rtc.h` from
   Bionic.
+- `fix(wpa_supplicant_8_lib): build with the wpa_supplicant cflags`:
+  `lib_driver_cmd_mt66xx` was compiled without the `CONFIG_*` flags of
+  wpa_supplicant, so `struct wpa_driver_nl80211_data` had a different
+  layout than in the supplicant (`CONFIG_NAN` adds a field to
+  `struct wpa_driver_capa`). Driver commands such as `COUNTRY` then read
+  `drv->first_bss` from the wrong offset and wpa_supplicant crashed.
